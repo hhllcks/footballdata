@@ -5,8 +5,8 @@ footballdata
     :target: https://pypi.python.org/pypi/footballdataorg
     :alt: Latest PyPI version
 
-.. image:: https://travis-ci.org/hhllcks/footballdata.png
-   :target: https://travis-ci.org/hhllcks/footballdata
+.. image:: https://travis-ci.org/hhllcks/footballdataorg.png
+   :target: https://travis-ci.org/hhllcks/footballdataorg
    :alt: Latest Travis CI build status
 
 A wrapper for the football-data.org api
