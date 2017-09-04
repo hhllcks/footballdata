@@ -1,9 +1,9 @@
 import setuptools
 
 setuptools.setup(
-    name="football-data",
+    name="footballdataorg",
     version="0.1.0",
-    url="https://github.com/hhllcks/footballdataorg,
+    url="https://github.com/hhllcks/footballdataorg",
 
     author="Hendrik Hilleckes",
     author_email="hhllcks@gmail.com",
