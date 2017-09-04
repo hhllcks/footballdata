@@ -1,9 +1,9 @@
 import setuptools
 
 setuptools.setup(
-    name="footballdata",
+    name="football-data",
     version="0.1.0",
-    url="https://github.com/hhllcks/footballdata",
+    url="https://github.com/hhllcks/footballdataorg,
 
     author="Hendrik Hilleckes",
     author_email="hhllcks@gmail.com",
@@ -16,12 +16,9 @@ setuptools.setup(
     install_requires=[],
 
     classifiers=[
-        'Development Status :: 2 - Pre-Alpha',
+        'Development Status :: 3 - Alpha',
         'Programming Language :: Python',
-        'Programming Language :: Python :: 2',
-        'Programming Language :: Python :: 2.7',
-        'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.4',
-        'Programming Language :: Python :: 3.5',
+        'Programming Language :: Python :: 3 :: Only',
+        'Programming Language :: Python :: 3.6'
     ],
 )

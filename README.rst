@@ -1,8 +1,8 @@
 footballdata
 ============
 
-.. image:: https://img.shields.io/pypi/v/footballdata.svg
-    :target: https://pypi.python.org/pypi/footballdata
+.. image:: https://img.shields.io/pypi/v/footballdataorg.svg
+    :target: https://pypi.python.org/pypi/footballdataorg
     :alt: Latest PyPI version
 
 .. image:: https://travis-ci.org/hhllcks/footballdata.png
@@ -19,14 +19,18 @@ Installation
 
 Requirements
 ^^^^^^^^^^^^
+You have to request an API key over at http://api.football-data.org/client/register.
 
 Compatibility
 -------------
 
 Licence
 -------
+GNU General Public License v3.0
 
 Authors
 -------
 
-`footballdata` was written by `Hendrik Hilleckes <hhllcks@gmail.com>`_.
+`footballdataorg` was written by `Hendrik Hilleckes <hhllcks@gmail.com>`_.
+
+`football-data.org` is a service created by `Daniel Freitag <daniel@football-data.org>`_.

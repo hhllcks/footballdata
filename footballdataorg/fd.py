@@ -182,13 +182,3 @@ class FD(object):
         template = "An exception of type {0} occurred. Arguments:\n{1!r}"
         message = template.format(type(ex).__name__, ex.args)
         print(message)
-
-if __name__ == '__main__':
-    fd = FD('cb37b35e6683426cb6aeb8356f36e66d')
-    bl1 = fd.get_competition(league_code='BL1')
-    bvb = fd.get_team('4')
-    fixture = fd.get_fixtures(competition=bl1, team=bvb)['fixtures'][0]
-    head2head = fd.get_fixture(fixture['_links']['self']['href'].split('/')[5], head2head='4')
-    #players = fd.get_players(bvb)
-    #teams = fd.search_teams('hamburg')
-    print(fd.get_fixtures(team=bvb, timeFrame='n20', venue='away'))
