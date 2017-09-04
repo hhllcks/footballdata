@@ -21,7 +21,7 @@ Just *pip install footballdataorg*
 
 Requirements
 ^^^^^^^^^^^^
-None.
+You can find the requirements `here <requirements.txt>`_.
 
 However, if you want to make a lot of requests you have to request an API key over at http://api.football-data.org/client/register.
 
