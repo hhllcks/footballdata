@@ -13,17 +13,21 @@ A wrapper for the football-data.org api
 
 Usage
 -----
-Please refer to the [Quick Start Notebook](QuickStart.ipynb) to learn how to use footballdataorg.
+Please refer to the `Quick Start Notebook`_ to learn how to use footballdataorg.
 
 Installation
 ------------
+Just *pip install footballdataorg*
 
 Requirements
 ^^^^^^^^^^^^
-You have to request an API key over at http://api.football-data.org/client/register.
+None.
+
+However, if you want to make a lot of requests you have to request an API key over at http://api.football-data.org/client/register.
 
 Compatibility
 -------------
+Python 3
 
 Licence
 -------
@@ -35,3 +39,5 @@ Authors
 `footballdataorg` was written by `Hendrik Hilleckes <hhllcks@gmail.com>`_.
 
 `football-data.org` is a service created by `Daniel Freitag <daniel@football-data.org>`_.
+
+.. _Quick Start Notebook: QuickStart.ipynb
