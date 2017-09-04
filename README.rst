@@ -13,6 +13,7 @@ A wrapper for the football-data.org api
 
 Usage
 -----
+Please refer to the [Quick Start Notebook](QuickStart.ipynb) to learn how to use footballdataorg.
 
 Installation
 ------------

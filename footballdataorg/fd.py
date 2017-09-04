@@ -5,8 +5,10 @@ from footballdataorg.exceptions import APIErrorException, IncorrectParametersExc
 class FD(object):
     """ Please register on football-data.org (http://api.football-data.org/client/register)
     to get an API key. """
-    def __init__(self, apikey):
-        headers = {'X-Auth-Token': apikey}
+    def __init__(self, apikey=None):
+        headers = {}
+        if apikey is not None:
+            headers['X-Auth-Token'] = apikey
         self.rh = RequestHandler(headers)
         self.competitions = {}
 
