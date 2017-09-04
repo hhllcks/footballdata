@@ -1,6 +1,9 @@
-from exceptions import APIErrorException, IncorrectParametersException, IncorrectFilterException
-
-from service import SERVICE_DEFINITION
+"""
+This module contains the RequestHandler which encapsulates the requests
+to the football-data.org api.
+"""
+from footballdataorg.exceptions import APIErrorException, IncorrectParametersException, IncorrectFilterException
+from footballdataorg.service import SERVICE_DEFINITION
 import requests
 
 class RequestHandler(object):

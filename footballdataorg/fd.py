@@ -1,6 +1,6 @@
 """ Entry point for football-data.org api wrapper """
-from RequestHandler import RequestHandler
-from exceptions import *
+from footballdataorg.request_handler import RequestHandler
+from footballdataorg.exceptions import APIErrorException, IncorrectParametersException, IncorrectFilterException
 
 class FD(object):
     """ Please register on football-data.org (http://api.football-data.org/client/register)
