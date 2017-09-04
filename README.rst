@@ -1,5 +1,5 @@
-footballdata
-============
+footballdataorg
+===============
 
 .. image:: https://img.shields.io/pypi/v/footballdataorg.svg
     :target: https://pypi.python.org/pypi/footballdataorg
