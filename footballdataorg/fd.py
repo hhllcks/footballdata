@@ -1,14 +1,18 @@
 """ Entry point for football-data.org api wrapper """
+import logging
 from footballdataorg.request_handler import RequestHandler
-from footballdataorg.exceptions import APIErrorException, IncorrectParametersException, IncorrectFilterException
+from footballdataorg.exceptions import APIErrorException, IncorrectParametersException, IncorrectFilterException, IncorrectMethodCallException
 
 class FD(object):
     """ Please register on football-data.org (http://api.football-data.org/client/register)
     to get an API key. """
     def __init__(self, apikey=None):
+        self.logger = logging.getLogger(__name__)
         headers = {}
         if apikey is not None:
+            self.logger.info(f'Initializing with API key {apikey}')
             headers['X-Auth-Token'] = apikey
+        self.logger.info('Creating RequestHandler')
         self.rh = RequestHandler(headers)
         self.competitions = {}
 
@@ -19,22 +23,28 @@ class FD(object):
             self.__handleException(e)
 
     def get_competitions(self,season=None):
-        if season is not None:
-            seasonFilter = {
-                'name': 'season',
-                'value': season
-            }
-            filters = [seasonFilter]
-        else:
-            filters = None
-            season = 'default'
+        try:
+            if season is not None:
+                self.logger.debug(f'Get competitions of season {season}')
+                seasonFilter = {
+                    'name': 'season',
+                    'value': season
+                }
+                filters = [seasonFilter]
+            else:
+                self.logger.debug(f'Get competitions of current season')
+                filters = []
+                season = 'default'
 
-        if season not in self.competitions or self.competitions[season] is None:
-            self.competitions[season] = self._request('competitions', filters=filters)
-            
-        return self.competitions[season]
+            if season not in self.competitions or self.competitions[season] is None:
+                self.competitions[season] = self._request('competitions', filters=filters)
+                
+            return self.competitions[season]
+        except Exception as ex:
+            self.__handleException(ex)
 
     def get_competition(self, league_id=None, league_code=None, season=None):
+        self.logger.debug(f'Get a competition with the following parameters: {locals()}')
         if league_id is not None:
             return self._request('competitions', league_id)
         elif league_code is not None:
@@ -44,24 +54,32 @@ class FD(object):
                     return competition
 
     def get_team(self, team_id):
+        self.logger.debug(f'Get a single team with id {team_id}')
         return self._request('teams', team_id)
 
     def get_teams(self, competition):
-        competition_id = competition['_links']['self']['href'].split('/')[5]
+        self.logger.debug(f'Geting list of teams')
+        competition_id = self.__get_competition_id(competition)
+        self.logger.debug(f'Competition id is {competition_id}')
         return self._request('competitions', competition_id, 'teams')
 
     def search_teams(self, query):
+        self.logger.debug(f'Searching for teams with query "{query}"')
         return self._request('teams', filters=[self.__createFilter('name', query)])
 
     def get_league_table(self, competition, matchday=None):
         if matchday is not None:
+            self.logger.debug(f'Getting league table of competition {competition["caption"]} on matchday {str(matchday)}')
             matchday_filter = {
                 'name': 'matchday',
                 'value': str(matchday)
             }
             filters = [matchday_filter]
         else:
-            filters = None
+            self.logger.debug(f'Getting the current league table of competition {competition["caption"]}')
+            filters = []
+
+        competition_id = self.__get_competition_id(competition)
         return self._request('competitions', competition['id'], 'leagueTable', filters=filters)
 
     def get_fixtures(self, competition=None, team=None, timeFrame=None, matchday=None, season=None, venue=None, league=None):    
@@ -72,7 +90,7 @@ class FD(object):
 
             Args:
                * competition (:obj: json, optional): a competition in json format obtained from the service.
-               * team (:obj: json, optional): a team in json format obtained form the service.
+               * team (:obj: json, optional): a team in json format obtained from the service.
                * timeFrame (str, optional): a timeFrame string.
                * matchday (int, optional): the matchday in integer format.
                * season (str, optional): the year of the season.
@@ -103,6 +121,7 @@ class FD(object):
             * league: a leagueCode. Please refer to the documentation to get a list of league codes.
             * timeFrame: a timeFrame string (e.g. n14 for fixtures in the next 14 days)
         """
+        self.logger.debug(f'Getting fixtures with the following parameters: {locals()}')
         filters = []
         if competition is not None:
             if timeFrame is not None and matchday is not None:
@@ -112,7 +131,7 @@ class FD(object):
             elif timeFrame is None and matchday is not None:
                 filters.append(self.__createFilter('matchday', matchday))
 
-            competition_id = competition['_links']['self']['href'].split('/')[5]
+            competition_id = self.__get_competition_id(competition)
             fixtures = self._request('competitions', competition_id, 'fixtures', filters=filters)
             if team is not None:
                 fixtures['fixtures'] = list(filter(lambda fixture: fixture['_links']['homeTeam']['href'] == team['_links']['self']['href'] or fixture['_links']['awayTeam']['href'] == team['_links']['self']['href'], fixtures['fixtures']))
@@ -127,7 +146,7 @@ class FD(object):
             elif timeFrame is not None:
                 filters.append(self.__createFilter('timeFrame', timeFrame))
 
-            team_id = team['_links']['self']['href'].split('/')[5]
+            team_id = self.__get_team_id(team)
             fixtures = self._request('teams', team_id, 'fixtures', filters=filters)
         else:
             if league is not None:
@@ -151,7 +170,11 @@ class FD(object):
         """
         filters = []
         if head2head is not None and int(head2head) > 0:
+            self.logger.debug(f'Getting fixture {fixture_id}. head2head is {head2head}.')
             filters.append(self.__createFilter('head2head', head2head))
+        else:
+            self.logger.debug(f'Getting fixture {fixture_id}.')
+
         return self._request('fixtures', fixture_id, filters=filters)
 
     def get_players(self, team):
@@ -159,12 +182,13 @@ class FD(object):
         Loads the players of a team.
 
         Args:
-            * team (:obj: json): a team in json format obtained form the service.
+            * team (:obj: json): a team in json format obtained from the service.
 
         Returns:
             * :obj: json: the players of the team
         """
-        team_id = team['_links']['self']['href'].split('/')[5]
+        team_id = self.__get_team_id(team)
+        self.logger.debug(f'Getting players of team {team_id}.')
         return self._request('teams', team_id, 'players')
 
     def __createFilter(self, name, value):
@@ -180,7 +204,19 @@ class FD(object):
         """
         return {'name': name, 'value': str(value)}
 
+    def __get_competition_id(self, competition):
+        try:
+            return competition['_links']['self']['href'].split('/')[5]
+        except TypeError as ex:
+            self.__handleException(ex)
+
+    def __get_team_id(self, team):
+        try:
+            return team['_links']['self']['href'].split('/')[5]
+        except TypeError as ex:
+            self.__handleException(ex)
+
     def __handleException(self, ex):
         template = "An exception of type {0} occurred. Arguments:\n{1!r}"
         message = template.format(type(ex).__name__, ex.args)
-        print(message)
+        self.logger.error(message)

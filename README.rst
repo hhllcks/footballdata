@@ -21,7 +21,7 @@ Just *pip install footballdataorg*
 
 Requirements
 ^^^^^^^^^^^^
-You can find the requirements `here <requirements.txt>`_.
+You can find the requirements `here <https://github.com/hhllcks/footballdataorg/blob/master/requirements.txt>`_.
 
 However, if you want to make a lot of requests you have to request an API key over at http://api.football-data.org/client/register.
 
@@ -40,4 +40,4 @@ Authors
 
 `football-data.org` is a service created by `Daniel Freitag <daniel@football-data.org>`_.
 
-.. _Quick Start Notebook: QuickStart.ipynb
+.. _Quick Start Notebook: https://github.com/hhllcks/footballdataorg/blob/master/QuickStart.ipynb
