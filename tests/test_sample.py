@@ -1,4 +1,7 @@
 # Sample Test passing with nose and pytest
 
-def test_pass():
+from .context import FD
+
+def test_fd():
+    fd = FD()
     assert True, "dummy sample test"
