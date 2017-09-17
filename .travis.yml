@@ -1,18 +1,16 @@
 language: python
-python: 
-  - "3.6"
-
-install: "pip install -r requirements.txt"
-
+python:
+- '3.6'
+install: pip install -r requirements.txt
 script: pytest
-
 notifications:
   email:
-    on_success: never # default: change
-    on_failure: always # default: always
-
+    on_success: never
+    on_failure: always
 deploy:
   provider: pypi
-  user: "hhllcks"
+  user: hhllcks
   on:
     tags: true
+  password:
+    secure: PrZpMm/43c/B5Os+77ynY/lCnHkZpTVueDMINKm7mZQeZ/Tk0+cEIzYfetBR5b100BXXb6fek4qaFb11ZINXpfOwDNcKN5v88KQdPZAk2j8ce0l6pM+eDX35O2Wcfvc5Xu7AR3O9H8416ZQ5GVROglCp68NxeYbO70Ah4Mkv32Ma6hJLdUkqAytSSchuJ9dS3HOfRloOZqXy9IQ1wkXSmjUw2C893TLPabCB1urkflt9C/Kma66RQ5HZJJhqpK1ewHWitmPvOOxXBsEiFlvS9l8JRHiGVjmdz1zDUIA8zIUuT+g8B/hmrEWxvgeAIHUf9cb1ULUorRRdv6HGDGI/TDrEkWgSfq9sE1On52oCLuMYYU8oAwTX26MRFUmBrvpR8G3ClAsnYg358qAnUD/Gdqwc16SDxMPoXdMem2AkFRKtR7f9HeyrwoXXlZr+CIad6PIu7V58B+pP4T1wNW5jPtnQFapSxQsSiyZ+0oVjhgaKeDnL8NiPJA3KNtLy+LKdg+ukeI39bKQjjgYlyaom4AOmwExCaLe1FgiFxAYDQF9MIJnFFrreLTsWpk3M6+h0AFXxI+mHGa8ZZyKVBcx2X3F3xFLQAdT4zzQksoKxawrs9E6lwavlGOPe5WkEa8OKssQnkLv3VOxOr6jfCcvhWp3KZVbvNj/xcYZjX/p3kpQ=
