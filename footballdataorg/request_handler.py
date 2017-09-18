@@ -54,6 +54,10 @@ class RequestHandler(object):
         self.logger.debug(f'Subresource: {sub}')
         self.logger.debug(f'Filters: {filters}')
 
+        main = str(main)
+        main_id = str(main_id)
+        sub = str(sub)
+
         url = ''
         if main in SERVICE_DEFINITION['resources']:
             resource = SERVICE_DEFINITION['resources'][main]
@@ -99,6 +103,7 @@ class RequestHandler(object):
                         if resource['filters'][filter['name']]['withId'] != withId:
                             raise IncorrectFilterException(f'Wrong use of filter {filter["name"]}. Please check if ID needs to be present.', resource['name'], filter['name'], filter['value'])
 
+                    filter['value'] = str(filter['value'])
                     match = resource['filters'][filter['name']]['re'].match(filter['value'])
                     if match is None:
                         raise IncorrectFilterException(f'Incorrect value for filter {filter["name"]}', resource['name'], filter['name'], filter['value'])
