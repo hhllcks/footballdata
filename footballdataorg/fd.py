@@ -48,7 +48,10 @@ class FD(object):
         if league_id is not None:
             return self._request('competitions', league_id)
         elif league_code is not None:
-            competitions = self.get_competitions(season)
+            if season is not None:
+                competitions = self.get_competitions(season)
+            else:
+                competitions = self.get_competitions()
             for competition in competitions:
                 if competition['league'] == league_code:
                     return competition
