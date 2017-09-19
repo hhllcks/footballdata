@@ -26,11 +26,11 @@ class FD(object):
         try:
             if season is not None:
                 self.logger.debug(f'Get competitions of season {season}')
-                seasonFilter = {
+                season_filter = {
                     'name': 'season',
                     'value': season
                 }
-                filters = [seasonFilter]
+                filters = [season_filter]
             else:
                 self.logger.debug(f'Get competitions of current season')
                 filters = []

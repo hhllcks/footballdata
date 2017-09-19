@@ -54,15 +54,10 @@ class RequestHandler(object):
         self.logger.debug(f'Subresource: {sub}')
         self.logger.debug(f'Filters: {filters}')
 
-        main = str(main)
-        main_id = str(main_id)
-        sub = str(sub)
-
         url = ''
         if main in SERVICE_DEFINITION['resources']:
             resource = SERVICE_DEFINITION['resources'][main]
             url = url + '/' + main
-
             if main_id == None:
                 if resource['standalone'] == False and filters is None:
                     raise IncorrectParametersException(f'Resource {main} can not be used without an id or filter', main, main_id, sub, filters)
